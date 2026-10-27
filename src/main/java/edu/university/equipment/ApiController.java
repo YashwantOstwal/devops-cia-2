@@ -8,6 +8,11 @@ public class ApiController {
  @PostMapping("/api/bookings") @ResponseStatus(HttpStatus.CREATED) public Booking create(@Valid @RequestBody CreateBookingRequest r){return service.create(r.getBorrowerId(),r.getEquipmentId(),r.getQuantity());}
  @GetMapping("/api/bookings/{id}") public Booking booking(@PathVariable String id){return service.getBooking(id);}
  @PostMapping("/api/bookings/{id}/cancel") public Booking cancel(@PathVariable String id){return service.cancel(id);}
+ @ExceptionHandler(org.springframework.web.bind.MethodArgumentNotValidException.class)
+ @ResponseStatus(HttpStatus.BAD_REQUEST)
+ public Map<String,String> validationError(org.springframework.web.bind.MethodArgumentNotValidException e){
+  return Map.of("error","BAD_REQUEST","message",e.getBindingResult().getFieldErrors().get(0).getField()+" must not be blank or otherwise invalid");
+ }
  @ExceptionHandler(NoSuchElementException.class) @ResponseStatus(HttpStatus.NOT_FOUND) public Map<String,String> notFound(Exception e){return Map.of("error","NOT_FOUND","message",e.getMessage());}
  @ExceptionHandler(IllegalArgumentException.class) @ResponseStatus(HttpStatus.BAD_REQUEST) public Map<String,String> badRequest(Exception e){return Map.of("error","BAD_REQUEST","message",e.getMessage());}
  @ExceptionHandler(IllegalStateException.class) @ResponseStatus(HttpStatus.CONFLICT) public Map<String,String> conflict(Exception e){return Map.of("error","CONFLICT","message",e.getMessage());}
