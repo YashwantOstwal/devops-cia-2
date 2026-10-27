@@ -1,0 +1,21 @@
+name: Java CI and Docker Build
+on:
+  push:
+    branches: [main, feature/borrower-validation]
+  pull_request:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: maven
+      - name: Run tests
+        run: mvn -B clean test
+      - name: Package JAR
+        run: mvn -B clean package
+      - name: Build Docker image
+        run: docker build -t campus-equipment-booking:set-d .

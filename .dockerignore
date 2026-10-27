@@ -1,0 +1,8 @@
+.git
+.github
+*.log
+README.md
+src
+k8s
+target/*
+!target/campus-equipment-booking-1.0.0.jar

@@ -37,7 +37,7 @@ class BorrowerValidationTest {
 
     @Test
     void whitespaceOnlyBorrowerIsRejected() throws Exception {
-        assertRejected("{\"borrowerId\":\"   ",\"equipmentId\":\"TABLET01\",\"quantity\":1}");
+        assertRejected("{\"borrowerId\":\"   \",\"equipmentId\":\"TABLET01\",\"quantity\":1}");
     }
 
     @Test
